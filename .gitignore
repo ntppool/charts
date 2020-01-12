@@ -1,4 +1,5 @@
 # General files for the project
+/config.yaml
 pkg/*
 *.pyc
 bin/*
