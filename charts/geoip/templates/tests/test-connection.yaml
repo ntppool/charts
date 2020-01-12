@@ -8,8 +8,8 @@ metadata:
     "helm.sh/hook": test-success
 spec:
   containers:
-    - name: wget
-      image: busybox
-      command: ['wget']
-      args:  ['{{ include "geoip.fullname" . }}:{{ .Values.service.port }}']
+    - name: healthcheck
+      image: quay.io/ntppool/alpine-tools:3.11-0
+      command: ['curl']
+      args:  ['-f', '-v', '{{ include "geoip.fullname" . }}:{{ .Values.service.port }}/healthz']
   restartPolicy: Never
