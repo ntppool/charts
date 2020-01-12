@@ -1,0 +1,5 @@
+
+The GeoIP service isn't (and shouldn't be exposed outside the cluster).
+
+The NTP Pool system expects it to be available in the namespace as the
+ntppool helm release name plus "-geoip" on port 80.
