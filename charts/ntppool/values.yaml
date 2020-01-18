@@ -76,39 +76,39 @@ jobs:
     enabled: true
   combust-cleanup:
     enabled: true
-    args:
-      - sh
-      - /ntppool/combust/bin/cron/hourly
+    containers:
+    - name: cleanup
+      args: ['sh', '/ntppool/combust/bin/cron/hourly' ]
     schedule: "12,32,52 * * * *"
   invite-cleanup:
     enabled: true
-    command:
-      - /ntppool/docker/entrypoint
-    args:
+    containers:
+    - name: zone-stats
+      args:
       - sh
       - /ntppool/bin/cron/invite-cleanup
     schedule: "17,47 * * * *"
   server-notifications:
     enabled: true
-    command:
-      - /ntppool/docker/entrypoint
-    args:
-      - sh
-      - /ntppool/bin/bad_server_notifications
+    containers:
+    - name: zone-stats
+      args:
+        - sh
+        - /ntppool/bin/bad_server_notifications
     schedule: "*/15 * * * *"
   server-removals:
     enabled: true
-    command:
-      - /ntppool/docker/entrypoint
-    args:
+    containers:
+    - name: zone-stats
+      args:
       - sh
       - /ntppool/bin/bad_server_removals
     schedule: "50 */3 * * *"
   zone-stats:
     enabled: true
-    command:
-      - /ntppool/docker/entrypoint
-    args:
+    containers:
+    - name: zone-stats
+      args:
       - sh
       - /ntppool/bin/zone_stats
     schedule: "57 */4 * * *"

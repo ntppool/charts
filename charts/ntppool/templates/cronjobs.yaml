@@ -28,21 +28,21 @@ spec:
         spec:
           activeDeadlineSeconds: 1800
           containers:
-          - name: {{ $name }}
+          {{ range $c := $job.containers }}
+          - name: {{ default $name $c.name }}
             {{- $containerDefaults | nindent 12 }}
-            {{- with $job.command }}
-            {{ if $job.command }}
+            {{ if $c.command }}
             command:
-                {{- toYaml . | nindent 12 }}
+              {{- toYaml . | nindent 14 }}
             {{ else }}
             command:
-                - /ntppool/docker/entrypoint
+              - /ntppool/docker/entrypoint
             {{ end }}
-            {{- end }}
-            {{- with $job.args }}
+            {{- with $c.args }}
             args:
                 {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{ end }}
           securityContext:
             {{ toYaml $values.podSecurityContext | nindent 12 }}
 
