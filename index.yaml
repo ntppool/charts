@@ -1,0 +1,34 @@
+apiVersion: v1
+entries:
+  geoip:
+  - apiVersion: v2
+    appVersion: 0.7.1
+    created: "2020-01-13T16:28:10.518881+08:00"
+    description: geoip API
+    digest: 469d4d68fd9c8d7e7d12a284c81e942d2f91e57e07c11b4fa6d24890ce18effd
+    icon: http://charts.ntppool.org/resources/icon.svg
+    name: geoip
+    urls:
+    - https://github.com/ntppool/charts/releases/download/geoip-0.1.1/geoip-0.1.1.tgz
+    version: 0.1.1
+  smtp:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2020-01-13T16:28:10.986106+08:00"
+    description: A Helm chart for Kubernetes
+    digest: 1aae55b39d48149d191e2023f0badec472143c22cbf5d5ed0521139ecf211545
+    name: smtp
+    urls:
+    - https://github.com/ntppool/charts/releases/download/smtp-0.1.0/smtp-0.1.0.tgz
+    version: 0.1.0
+  splash:
+  - apiVersion: v2
+    appVersion: 3.4.1
+    created: "2020-01-13T16:28:11.389867+08:00"
+    description: Splash scraping application
+    digest: 7a01e83314e44b8695d2cc3d0bfb5221e45c40984990b4045df0bab3cf764b40
+    name: splash
+    urls:
+    - https://github.com/ntppool/charts/releases/download/splash-1.0.0/splash-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-01-13T16:28:09.780183+08:00"

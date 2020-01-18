@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dnsdist.fullname" . }}
+  labels:
+    {{- include "dnsdist.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dnsdist.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dnsdist.selectorLabels" . | nindent 8 }}
+      annotations:
+        checksum/config: {{ (print $.Values.config) . | sha256sum }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "dnsdist.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          command: ['/usr/bin/dnsdist']
+          args: ['--config', '/config/dnsdist.conf', '--supervised', '--local', '0.0.0.0:5300']
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: doh
+              containerPort: 8053
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 8083
+              {{- with .Values.healthCheckHeaders }}
+              httpHeaders:
+                {{- toYaml . | nindent 14 }}
+              {{- end }}
+
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 8083
+              {{- with .Values.healthCheckHeaders }}
+              httpHeaders:
+                {{- toYaml . | nindent 14 }}
+              {{- end }}
+          volumeMounts:
+          - mountPath: /config/
+            name: config
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "dnsdist.fullname" . }}-config
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
