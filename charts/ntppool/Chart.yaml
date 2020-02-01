@@ -1,0 +1,36 @@
+apiVersion: v2
+name: ntppool
+description: NTP Pool System
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 0.0.1
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+#appVersion: ac24fcc
+appVersion: 331c596
+# appVersion: latest
+
+dependencies:
+- name: mysql
+  version: 1.x.x
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: mysql.enabled
+- name: geoip
+  version: 0.x.x
+  repository: https://charts.ntppool.org/
+- name: splash
+  version: 1.x.x
+  repository: https://charts.ntppool.org/
+  condition: splash.enabled

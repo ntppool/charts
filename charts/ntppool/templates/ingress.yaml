@@ -1,0 +1,66 @@
+{{ if .Values.ingress.enabled -}}
+
+{{ $g := . }}
+{{ $values := $g.Values }}
+{{ $config := .Values.config }}
+
+{{ $fullName := include "ntppool.fullname" . -}}
+
+{{ range $ingress_type := .Values.ingress.types }}
+---
+{{ $svcPort := $values.service.port -}}
+{{ if semverCompare ">=1.14-0" $g.Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{ else -}}
+apiVersion: extensions/v1beta1
+{{ end }}
+{{ $hosts := "" }}
+{{ if eq $ingress_type "manage" }}
+{{   $hosts = splitList "," $config.manage_hostname }}
+{{ else }}
+{{   $hosts = splitList "," $config.web_hostname }}
+{{ end }}
+{{ $tls := false }}
+{{ if eq $ingress_type "manage" }}
+{{   $tls = eq $config.manage_tls "yes" }}
+{{ else }}
+{{   $tls = eq $config.web_tls "yes" }}
+{{ end }}
+
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-{{ $ingress_type }}
+  labels:
+    {{ include "ntppool.labels" $g | nindent 4 }}
+  annotations:
+  {{- if $values.ingress.class }}
+    ingress.class: {{ $values.ingress.class }}
+  {{- end }}
+  {{- if $tls }}
+    kubernetes.io/tls-acme: "true"
+  {{ end }}
+
+  {{ with $values.ingress.annotations }}
+    {{ toYaml . | nindent 4 }}
+  {{ end }}
+spec:
+{{ if $tls }}
+  tls:
+    - hosts:
+      {{ range $hosts }}
+        - {{ . | quote }}
+      {{ end }}
+      secretName: {{ $fullName }}-{{ $ingress_type }}-tls
+{{ end }}
+  rules:
+  {{ range $hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+  {{ end }}
+{{ end }}
+{{ end }}

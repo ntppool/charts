@@ -1,0 +1,12 @@
+dependencies:
+- name: mysql
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.6.2
+- name: geoip
+  repository: https://charts.ntppool.org/
+  version: 0.x.x
+- name: splash
+  repository: https://charts.ntppool.org/
+  version: 1.x.x
+digest: sha256:5f57a34bd3429b5311ad9930b66fbd34a39a23107e73bc09118e492f393597bc
+generated: "2020-01-18T00:40:20.989053-08:00"

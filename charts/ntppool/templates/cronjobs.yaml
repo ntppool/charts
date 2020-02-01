@@ -1,0 +1,57 @@
+{{- if .Values.jobs.global.enabled -}}
+
+{{- $chart_name := include "ntppool.fullname" . }}
+{{- $labels := include "ntppool.labels" . -}}
+{{- $containerDefaults := include "ntppool.appContainerDefaults" . -}}
+{{- $volumes := include "ntppool.appVolumes" . -}}
+{{- $values := .Values -}}
+
+{{- range $name, $job := .Values.jobs }}
+{{- if and (ne $name "global") ($job.enabled) }}
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "{{ $chart_name }}-{{ $name }}"
+  labels:
+    {{- $labels | nindent 4 }}
+spec:
+  concurrencyPolicy: {{ if $job.concurrencyPolicy }}{{ $job.concurrencyPolicy }}{{ else }}Forbid{{ end }}
+  failedJobsHistoryLimit: {{ if $job.failedJobsHistoryLimit }}{{ $job.failedJobsHistoryLimit }}{{ else }}2{{end}}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- $labels | nindent 12 }}
+            cron: {{ $name }}
+        spec:
+          activeDeadlineSeconds: 1800
+          containers:
+          - name: {{ $name }}
+            {{- $containerDefaults | nindent 12 }}
+            {{- with $job.command }}
+            {{ if $job.command }}
+            command:
+                {{- toYaml . | nindent 12 }}
+            {{ else }}
+            command:
+                - /ntppool/docker/entrypoint
+            {{ end }}
+            {{- end }}
+            {{- with $job.args }}
+            args:
+                {{- toYaml . | nindent 12 }}
+            {{- end }}
+          securityContext:
+            {{ toYaml $values.podSecurityContext | nindent 12 }}
+
+          restartPolicy: Never
+          volumes:
+            {{ $volumes | nindent 10 }}
+  schedule: {{ $job.schedule | quote }}
+  startingDeadlineSeconds: 172400
+  successfulJobsHistoryLimit: 2
+{{- end }}
+{{- end -}}
+{{- end -}}

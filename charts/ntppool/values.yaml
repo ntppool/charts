@@ -1,0 +1,164 @@
+config:
+  auth0_client: QP7HeAG2jRn9QCXxMTOeoIbFcKGmaVZ0
+  auth0_domain: login.ntppool.org
+  db_dsn: dbi:mysql:database=ntppool;host=mysql
+  db_user: ntpbeta
+  deployment_mode: devel
+  email_default: ask@grundclock.com
+  email_help: beta-help@grundclock.com
+  email_notifications: ask@grundclock.com
+  email_sender: ask@grundclock.com
+  email_support: beta-help@grundclock.com
+  email_vendors: beta-vendors@grundclock.com
+  manage_hostname: manage.ntp.test
+  manage_tls: "no"
+  pool_domain: beta.grundclock.com
+  #static_base: https://st.ntppool.org/ntpbeta/
+  web_hostname: web.ntp.test,graphs.ntp.test
+  web_tls: "no"
+  #www_cname: beta-lb.ntppool.org.
+
+secrets:
+  account_id_key: "really secret"
+  auth0_secret: "auth0 secret from their console"
+  db_pass: thuq3k5ghqkjghqgiuqhrekjvahrgqh3ui4
+  smtp_pass: ergqrgqrgqrgqrg
+
+replicaCount: 1
+
+image:
+  repository: quay.io/ntppool/ntppool
+  pullPolicy: IfNotPresent
+
+develPath: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext:
+  # fsGroup: 2000
+  runAsUser: 1000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  types:
+  - web
+  - manage
+
+  # class:
+
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+
+jobs:
+  global:
+    enabled: true
+  combust-cleanup:
+    enabled: true
+    args:
+      - sh
+      - /ntppool/combust/bin/cron/hourly
+    schedule: "12,32,52 * * * *"
+  invite-cleanup:
+    enabled: true
+    command:
+      - /ntppool/docker/entrypoint
+    args:
+      - sh
+      - /ntppool/bin/cron/invite-cleanup
+    schedule: "17,47 * * * *"
+  server-notifications:
+    enabled: true
+    command:
+      - /ntppool/docker/entrypoint
+    args:
+      - sh
+      - /ntppool/bin/bad_server_notifications
+    schedule: "*/15 * * * *"
+  server-removals:
+    enabled: true
+    command:
+      - /ntppool/docker/entrypoint
+    args:
+      - sh
+      - /ntppool/bin/bad_server_removals
+    schedule: "50 */3 * * *"
+  zone-stats:
+    enabled: true
+    command:
+      - /ntppool/docker/entrypoint
+    args:
+      - sh
+      - /ntppool/bin/zone_stats
+    schedule: "57 */4 * * *"
+  statuspage:
+    enabled: false
+    schedule: "*/2 * * * *"
+    containers:
+      - name: "activeservers"
+        args: ["sh", "/ntppool/bin/statuspage/statuspage-activeservers"]
+      - name: "metrics"
+        args: ["sh", "/ntppool/bin/statuspage/statuspage-metrics"]
+      - name: "dnsqueries"
+        args: ["sh", "/ntppool/bin/statuspage/statuspage-dnsqueries"]
+
+
+
+resources:
+  limits:
+    cpu: 2
+    memory: 1400Mi
+  requests:
+    cpu: 10m
+    # in development ~300Mi is fine, production needs more
+    memory: 300Mi
+
+resources-low:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+geoip:
+  enabled: true
+
+splash:
+  enabled: false
+  appVersion: 3.3.1
+
+mysql:
+  enabled: false
+  mysqlRootPassword: "foo"
+  persistence.enabled: true
+  mysqlUser: "ntpdev"
+  mysqlPassword: "bar"
+  mysqlDatabase: "ntpdev"

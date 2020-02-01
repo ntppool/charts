@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "ntppool.fullname" . }}-database-combust"
+  labels:
+    {{- include "ntppool.labels" . | nindent 4 }}
+    job: setup-database
+  annotations:
+    "helm.sh/hook": "post-install,post-upgrade"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "ntppool.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: post-install-job
+        command:
+          - /ntppool/docker/entrypoint
+        args:
+          - sh
+          - /ntppool/bin/initialize_schema
+        {{- include "ntppool.appContainerDefaults" . | nindent 8 }}
+      volumes:
+        {{ include "ntppool.appVolumes" . | nindent 8 }}

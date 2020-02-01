@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ntppool.fullname" . }}
+  labels:
+    {{- include "ntppool.labels" . | nindent 4 }}
+    tier: frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ntppool.selectorLabels" . | nindent 6 }}
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        {{- include "ntppool.selectorLabels" . | nindent 8 }}
+        tier: frontend
+      annotations:
+        checksum/config: {{  (print $.Values.config) . | sha256sum }}
+        checksum/secrets: {{  (print $.Values.secrets) . | sha256sum }}
+
+    spec:
+      {{- if ne .Values.config.deployment_mode "devel" }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - frontend
+            topologyKey: kubernetes.io/hostname
+      {{- end }}
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "ntppool.serviceAccountName" . }}
+      securityContext:
+        {{ toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: httpd
+          command:
+          - /ntppool/docker/entrypoint
+          - /ntppool/docker-run
+          {{- include "ntppool.appContainerDefaults" . | nindent 10 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8299
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              httpHeaders:
+              - name: Host
+                value: web.ntp.cluster
+              path: /combust-healthz
+              port: 8299
+              scheme: HTTP
+            initialDelaySeconds: 4
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 1
+        - name: httpd-cron
+          command:
+          - /ntppool/docker/entrypoint
+          - /ntppool/bin/cron/runner
+          {{- include "ntppool.appContainerDefaults" . | nindent 10 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    # {{- with .Values.affinity }}
+    #   affinity:
+    #     {{- toYaml . | nindent 8 }}
+    # {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+        # tolerations:
+        # - effect: NoSchedule
+        #   key: node-role.kubernetes.io/master
+        #   operator: Exists
+    {{- end }}
+      volumes:
+        {{ include "ntppool.appVolumes" . | nindent 8 }}
