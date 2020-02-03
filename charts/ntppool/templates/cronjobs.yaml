@@ -40,8 +40,10 @@ spec:
             {{ end }}
             {{- with $c.args }}
             args:
-                {{- toYaml . | nindent 12 }}
+              {{- toYaml . | nindent 12 }}
             {{- end }}
+            resources:
+              {{- toYaml $values.resources_low | nindent 14 }}
           {{ end }}
           securityContext:
             {{ toYaml $values.podSecurityContext | nindent 12 }}

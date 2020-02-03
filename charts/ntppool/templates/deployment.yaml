@@ -71,7 +71,7 @@ spec:
           - /ntppool/bin/cron/runner
           {{- include "ntppool.appContainerDefaults" . | nindent 10 }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources_low | nindent 12 }}
 
       {{- with .Values.nodeSelector }}
       nodeSelector:

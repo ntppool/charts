@@ -123,8 +123,6 @@ jobs:
       - name: "dnsqueries"
         args: ["sh", "/ntppool/bin/statuspage/statuspage-dnsqueries"]
 
-
-
 resources:
   limits:
     cpu: 2
@@ -134,7 +132,7 @@ resources:
     # in development ~300Mi is fine, production needs more
     memory: 300Mi
 
-resources-low:
+resources_low:
   limits:
     cpu: 100m
     memory: 128Mi
