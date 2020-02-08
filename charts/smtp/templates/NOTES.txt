@@ -1,1 +1,4 @@
-...
+The smtp service should now be available in the {{ .Release.Namespace }}
+namespace as
+
+    {{ include "smtp.fullname" . }}:{{ .Values.service.port }}
