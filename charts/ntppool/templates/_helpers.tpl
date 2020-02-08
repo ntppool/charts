@@ -36,9 +36,7 @@ Common labels
 */}}
 {{- define "ntppool.chartLabels" -}}
 helm.sh/chart: {{ include "ntppool.chart" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/version: {{ default .Chart.AppVersion .Values.image.tag | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 {{- define "ntppool.labels" -}}
@@ -72,7 +70,7 @@ Standard app container
 {{- define "ntppool.appContainerDefaults" -}}
 securityContext:
   {{- toYaml .Values.securityContext | nindent 2 }}
-image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+image: "{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}"
 imagePullPolicy: {{ .Values.image.pullPolicy }}
 env:
 - name: CBCONFIG
