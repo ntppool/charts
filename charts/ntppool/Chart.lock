@@ -1,12 +1,15 @@
 dependencies:
 - name: mysql
   repository: https://kubernetes-charts.storage.googleapis.com
-  version: 1.6.2
+  version: 1.x.x
 - name: geoip
   repository: https://charts.ntppool.org/
-  version: 0.x.x
+  version: 0.1.2
 - name: splash
   repository: https://charts.ntppool.org/
-  version: 1.x.x
-digest: sha256:5f57a34bd3429b5311ad9930b66fbd34a39a23107e73bc09118e492f393597bc
-generated: "2020-01-18T00:40:20.989053-08:00"
+  version: 1.0.1
+- name: smtp
+  repository: https://charts.ntppool.org/
+  version: 0.1.0
+digest: sha256:a8099ccf161b91554f0468cdafb6c0619700e857d5f9cb1be25c49e192ae4b32
+generated: "2020-02-09T16:25:25.243961-08:00"
