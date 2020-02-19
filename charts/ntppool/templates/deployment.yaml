@@ -7,6 +7,7 @@ metadata:
     tier: frontend
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 4
   selector:
     matchLabels:
       {{- include "ntppool.selectorLabels" . | nindent 6 }}
