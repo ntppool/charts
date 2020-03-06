@@ -4,12 +4,12 @@ dependencies:
   version: 1.x.x
 - name: geoip
   repository: https://charts.ntppool.org/
-  version: 0.1.2
+  version: 0.x.x
 - name: splash
   repository: https://charts.ntppool.org/
-  version: 1.0.1
+  version: 1.x.x
 - name: smtp
   repository: https://charts.ntppool.org/
-  version: 0.1.0
-digest: sha256:a8099ccf161b91554f0468cdafb6c0619700e857d5f9cb1be25c49e192ae4b32
-generated: "2020-02-09T16:25:25.243961-08:00"
+  version: 0.x.x
+digest: sha256:4da89b6d0234807eb702b70a6da4b1a9fb2e9ff254d820fc86328dba71c81bf9
+generated: "2020-02-19T01:08:18.717185-08:00"
