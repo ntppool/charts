@@ -26,7 +26,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           command: ['/usr/bin/dnsdist']
-          args: ['--config', '/config/dnsdist.conf', '--supervised', '--local', '0.0.0.0:5300']
+          args: ['--config', '/config/dnsdist.conf', '--supervised', '--local', '0.0.0.0:5300', '--disable-syslog']
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
