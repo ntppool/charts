@@ -10,3 +10,17 @@ until](https://github.com/helm/helm/issues/3282) the development MySQL
 installation is running.
 
     helm -n ntpdev install --wait ntppool -f dev-values.yaml ntppool/ntppool
+
+
+
+## Overriding the image registry
+
+
+image:
+  repository: ...
+  tag: ...
+
+or
+
+image:
+  image: ...

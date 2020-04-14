@@ -19,7 +19,8 @@ config:
   #www_cname: beta-lb.ntppool.org.
 
 secrets:
-  account_id_key: "really secret"
+  account_id_key: "a random string"
+  vendor_zone_id_key: "another random string"
   auth0_secret: "auth0 secret from their console"
   db_pass: thuq3k5ghqkjghqgiuqhrekjvahrgqh3ui4
   smtp_pass: ergqrgqrgqrgqrg
@@ -29,6 +30,8 @@ replicaCount: 1
 image:
   repository: quay.io/ntppool/ntppool
   pullPolicy: IfNotPresent
+  # set image to override repository and tag in one value
+  image: ""
 
 develPath: ""
 
@@ -47,7 +50,8 @@ podSecurityContext:
   # fsGroup: 2000
   runAsUser: 1000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -62,12 +66,13 @@ service:
 ingress:
   enabled: true
   types:
-  - web
-  - manage
+    - web
+    - manage
 
   # class:
 
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
@@ -77,40 +82,40 @@ jobs:
   combust-cleanup:
     enabled: true
     containers:
-    - name: cleanup
-      args: ['sh', '/ntppool/combust/bin/cron/hourly' ]
+      - name: cleanup
+        args: ["sh", "/ntppool/combust/bin/cron/hourly"]
     schedule: "12,32,52 * * * *"
   invite-cleanup:
     enabled: true
     containers:
-    - name: zone-stats
-      args:
-      - sh
-      - /ntppool/bin/cron/invite-cleanup
+      - name: zone-stats
+        args:
+          - sh
+          - /ntppool/bin/cron/invite-cleanup
     schedule: "17,47 * * * *"
   server-notifications:
     enabled: true
     containers:
-    - name: zone-stats
-      args:
-        - sh
-        - /ntppool/bin/bad_server_notifications
+      - name: zone-stats
+        args:
+          - sh
+          - /ntppool/bin/bad_server_notifications
     schedule: "*/15 * * * *"
   server-removals:
     enabled: true
     containers:
-    - name: zone-stats
-      args:
-      - sh
-      - /ntppool/bin/bad_server_removals
+      - name: zone-stats
+        args:
+          - sh
+          - /ntppool/bin/bad_server_removals
     schedule: "50 */3 * * *"
   zone-stats:
     enabled: true
     containers:
-    - name: zone-stats
-      args:
-      - sh
-      - /ntppool/bin/zone_stats
+      - name: zone-stats
+        args:
+          - sh
+          - /ntppool/bin/zone_stats
     schedule: "57 */4 * * *"
   statuspage:
     enabled: false

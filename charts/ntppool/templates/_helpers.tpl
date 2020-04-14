@@ -70,7 +70,11 @@ Standard app container
 {{- define "ntppool.appContainerDefaults" -}}
 securityContext:
   {{- toYaml .Values.securityContext | nindent 2 }}
+{{ if .Values.image.image }}
+image: "{{ .Values.image.image }}"
+{{- else }}
 image: "{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}"
+{{- end }}
 imagePullPolicy: {{ .Values.image.pullPolicy }}
 env:
 - name: CBCONFIG
@@ -92,6 +96,11 @@ env:
     secretKeyRef:
       key: account_id_key
       name: {{ include "ntppool.fullname" . }}-secrets
+- name: vendor_zone_id_key
+  valueFrom:
+    secretKeyRef:
+      key: vendor_zone_id_key
+      name: {{ include "ntppool.fullname" . }}-secrets
 - name: geoip_service
   value: {{ .Release.Name }}-geoip
 - name: splash_service
@@ -102,8 +111,10 @@ envFrom:
 - configMapRef:
     name: {{ include "ntppool.fullname" . }}-config
 volumeMounts:
+{{ if (ne .Values.config.deployment_mode "devel") -}}
 - mountPath: /ntppool/data
   name: data
+{{- end -}}
 {{ if and .Values.develPath (eq .Values.config.deployment_mode "devel") -}}
 - mountPath: '/ntppool'
   name: 'code'
