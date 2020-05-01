@@ -32,6 +32,7 @@ image:
   pullPolicy: IfNotPresent
   # set image to override repository and tag in one value
   image: ""
+  tag: ""
 
 develPath: ""
 
