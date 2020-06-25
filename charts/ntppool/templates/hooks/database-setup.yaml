@@ -23,5 +23,7 @@ spec:
           - sh
           - /ntppool/bin/initialize_schema
         {{- include "ntppool.appContainerDefaults" . | nindent 8 }}
+        resources:
+          {{- toYaml .Values.resources_low | nindent 10 }}
       volumes:
         {{ include "ntppool.appVolumes" . | nindent 8 }}

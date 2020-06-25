@@ -35,7 +35,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "ntppool.chartLabels" -}}
-helm.sh/chart: {{ include "ntppool.chart" . }}
+helm.sh/chart: "{{ include "ntppool.chart" . }}"
 app.kubernetes.io/version: {{ default .Chart.AppVersion .Values.image.tag | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
