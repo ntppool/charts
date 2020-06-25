@@ -1,6 +1,7 @@
 apiVersion: v2
 name: dnsdist
 description: A Helm chart for Kubernetes
+home: https://dnsdist.org
 
 # A chart can be either an 'application' or a 'library' chart.
 #

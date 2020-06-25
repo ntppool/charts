@@ -1,6 +1,7 @@
 apiVersion: v2
 name: ntppool
 description: NTP Pool System
+home: https://github.com/abh/ntppool/
 
 # A chart can be either an 'application' or a 'library' chart.
 #

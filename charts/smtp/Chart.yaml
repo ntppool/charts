@@ -1,6 +1,7 @@
 apiVersion: v2
 name: smtp
 description: exim based smtp smarthost / mail relay
+home: https://github.com/namshi/docker-smtp
 
 # A chart can be either an 'application' or a 'library' chart.
 #

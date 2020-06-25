@@ -1,6 +1,7 @@
 apiVersion: v2
 name: geoip
 description: Simple HTTP API service for the MaxMind GeoIP database
+home: https://go.ntppool.org/
 
 icon: http://charts.ntppool.org/resources/geoip-icon.svg
 

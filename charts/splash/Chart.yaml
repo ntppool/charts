@@ -1,6 +1,7 @@
 apiVersion: v2
 name: splash
 description: Splash scraping application
+home: https://www.scrapinghub.com/splash
 
 # A chart can be either an 'application' or a 'library' chart.
 #
