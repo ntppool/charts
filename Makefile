@@ -1,9 +1,8 @@
-build:
-	helm package charts/* --destination .deploy	
+.PHONY: test
 
-push:
-	cr upload --config config.yaml
-
-index:
-	git checkout gh-pages
-	cr index -i ./index.yaml --config ./config.yaml
+.PHONY: publish
+publish:
+	@echo run helm push
+	@helm plugin install https://github.com/chartmuseum/helm-push.git
+	helm repo add ntppool ${HELM_URL}
+	helm push --username "$$HELM_USERNAME" --password="$$HELM_PASSWORD" --dependency-update --debug charts/ntppool ntppool

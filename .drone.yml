@@ -1,0 +1,47 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+- name: fetch
+  image: alpine/git
+  commands:
+  - git fetch --tags
+
+#- name: list-changed
+#  image: quay.io/helmpack/chart-testing:v3.0.0-rc.1
+#  environment:
+#    GIT_TRACE: "1"
+#  commands:
+#  - apk add --update git make
+#  - ls -la
+#  - cat .git/config
+#  - ct list-changed --config ct.yaml
+
+#- name: lint
+#  image: harbor.ntppool.org/ntppool/chart-testing:v3.0.1-dev.0
+#  environment:
+#    GIT_TRACE: "1"
+#  commands:
+#  - apk add --update git make
+#  - env
+#  - pwd
+#  - ls -l
+#  - ct lint --debug
+
+- name: build
+  image: alpine/helm:3.2.4
+  environment:
+    HELM_PASSWORD:
+      from_secret: helm_password
+    HELM_USERNAME:
+      from_secret: helm_username
+    HELM_URL:
+      from_secret: helm_repo_url
+  commands:
+  - apk add --update make git
+  - make publish
+  when:
+    branch:
+      include:
+      - main
