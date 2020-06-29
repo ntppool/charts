@@ -19,6 +19,9 @@ config:
   #www_cname: beta-lb.ntppool.org.
 
 secrets:
+  # specify an existing secret or the data directly
+  existingSecret: ""
+
   account_id_key: "a random string"
   vendor_zone_id_key: "another random string"
   auth0_secret: "auth0 secret from their console"
