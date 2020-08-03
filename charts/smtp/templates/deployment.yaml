@@ -14,7 +14,7 @@ spec:
       labels:
         {{- include "smtp.selectorLabels" . | nindent 8 }}
       annotations:
-        checksum/config: {{ (print $.Values.config) . | sha256sum }}
+        checksum/config: {{ print ($.Values.config) | sha256sum }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
