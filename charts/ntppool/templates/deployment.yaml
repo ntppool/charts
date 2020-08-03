@@ -18,8 +18,8 @@ spec:
         {{- include "ntppool.selectorLabels" . | nindent 8 }}
         tier: frontend
       annotations:
-        checksum/config: {{  (print $.Values.config) . | sha256sum }}
-        checksum/secrets: {{  (print $.Values.secrets) . | sha256sum }}
+        checksum/config: {{ print $.Values.config | sha256sum }}
+        checksum/secrets: {{ print $.Values.secrets | sha256sum }}
 
     spec:
       {{- if ne .Values.config.deployment_mode "devel" }}

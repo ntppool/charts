@@ -14,7 +14,7 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.4.2
+version: 0.4.3
 
 # application version (+default image tag)
 appVersion: prod-2020.04.1
@@ -32,5 +32,5 @@ dependencies:
   repository: https://charts.ntppool.org/
   condition: splash.enabled
 - name: smtp
-  version: 0.x.x
+  version: 1.x.x
   repository: https://charts.ntppool.org/
