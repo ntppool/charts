@@ -1,11 +1,12 @@
-# Default values for geoip.
+# Default values for geoipapi
+
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: quay.io/abh/geoipapi
+  repository: harbor.ntppool.org/ntppool/geoipapi
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

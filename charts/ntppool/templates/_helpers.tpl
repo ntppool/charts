@@ -79,8 +79,6 @@ imagePullPolicy: {{ .Values.image.pullPolicy }}
 env:
 - name: CBCONFIG
   value: /var/ntppool/combust.conf
-# - name: config-md5
-#   value: 0c20892bb6878df5ce68ba9d1ea2550a
 - name: auth0_secret
   valueFrom:
     secretKeyRef:
