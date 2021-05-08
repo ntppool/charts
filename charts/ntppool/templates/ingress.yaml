@@ -9,11 +9,7 @@
 {{ range $ingress_type := .Values.ingress.types }}
 ---
 {{ $svcPort := $values.service.port -}}
-{{ if semverCompare ">=1.14-0" $g.Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{ else -}}
-apiVersion: extensions/v1beta1
-{{ end }}
+apiVersion: networking.k8s.io/v1
 {{ $hosts := "" }}
 {{ if eq $ingress_type "manage" }}
 {{   $hosts = splitList "," $config.manage_hostname }}
@@ -58,9 +54,12 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
   {{ end }}
 {{ end }}
 {{ end }}
