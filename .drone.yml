@@ -30,7 +30,7 @@ steps:
 #  - ct lint --debug
 
 - name: build
-  image: alpine/helm:3.2.4
+  image: alpine/helm:3.6.3
   environment:
     HELM_PASSWORD:
       from_secret: helm_password

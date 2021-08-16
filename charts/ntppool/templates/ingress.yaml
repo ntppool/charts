@@ -30,7 +30,7 @@ metadata:
     {{ include "ntppool.labels" $g | nindent 4 }}
   annotations:
   {{- if $values.ingress.class }}
-    ingress.class: {{ $values.ingress.class }}
+    kubernetes.io/ingress.class: {{ $values.ingress.class }}
   {{- end }}
   {{- if $tls }}
     kubernetes.io/tls-acme: "true"
