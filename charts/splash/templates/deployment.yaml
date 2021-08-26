@@ -32,10 +32,12 @@ spec:
               containerPort: 8050
               protocol: TCP
           livenessProbe:
+            periodSeconds: 45
             httpGet:
               path: /
               port: http
           readinessProbe:
+            periodSeconds: 20
             httpGet:
               path: /
               port: http
