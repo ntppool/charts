@@ -14,10 +14,10 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.4.5
+version: 0.4.6
 
 # application version (+default image tag)
-appVersion: prod-2021.08.1
+appVersion: prod-2021-08.3
 
 dependencies:
 - name: mysql
