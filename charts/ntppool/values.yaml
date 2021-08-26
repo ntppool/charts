@@ -31,7 +31,7 @@ secrets:
 replicaCount: 1
 
 image:
-  repository: quay.io/ntppool/ntppool
+  repository: harbor.ntppool.org/ntppool/ntppool
   pullPolicy: IfNotPresent
   # set image to override repository and tag in one value
   image: ""
