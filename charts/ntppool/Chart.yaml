@@ -14,7 +14,7 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.4.10
+version: 0.4.11
 
 # application version (+default image tag)
 appVersion: prod-2022-02.0

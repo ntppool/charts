@@ -9,7 +9,7 @@
 {{- range $name, $job := .Values.jobs }}
 {{- if and (ne $name "global") ($job.enabled) }}
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: "{{ $chart_name }}-{{ $name }}"
