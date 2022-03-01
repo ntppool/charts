@@ -123,7 +123,7 @@ jobs:
     schedule: "57 */4 * * *"
   statuspage:
     enabled: false
-    schedule: "*/2 * * * *"
+    schedule: "*/3 * * * *"
     containers:
       - name: "activeservers"
         args: ["sh", "/ntppool/bin/statuspage/statuspage-activeservers"]
