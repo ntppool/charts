@@ -10,3 +10,5 @@ publish:
 	helm repo update
 	${PUSH} charts/splash  ntppool
 	${PUSH} charts/ntppool ntppool
+	${PUSH} charts/geoip   ntppool
+	${PUSH} charts/smtp    ntppool

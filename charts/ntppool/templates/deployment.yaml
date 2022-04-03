@@ -20,6 +20,10 @@ spec:
       annotations:
         checksum/config: {{ print $.Values.config | sha256sum }}
         checksum/secrets: {{ print $.Values.secrets | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+
 
     spec:
       {{- if ne .Values.config.deployment_mode "devel" }}

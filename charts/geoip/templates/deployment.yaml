@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         {{- include "geoip.selectorLabels" . | nindent 8 }}
+      {{- with .Values.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -22,7 +26,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: api
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
@@ -41,6 +45,61 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: geodns-data
+            subPath: geoip
+            mountPath: /usr/share/GeoIP/
+
+        - name: geoip
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: maxmindinc/geoipupdate:v4.8.0
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          {{- with .Values.geoipupdate.config_script }}
+          command: ["sh", "-c", "source {{ . }} && /usr/bin/entry.sh"]
+          {{- end }}
+
+          env:
+          {{- with .Values.geoipupdate.account_id }}
+          - name:  GEOIPUPDATE_ACCOUNT_ID
+            value: "{{ . }}"
+          {{- end }}
+          {{- with .Values.geoipupdate.license_key }}
+          - name:  GEOIPUPDATE_LICENSE_KEY
+            value: "{{ . }}"
+          {{- end }}
+          - name:  GEOIPUPDATE_FREQUENCY
+            value: "16"
+          - name:  GEOIPUPDATE_PRESERVE_FILE_TIMES
+            value: "1"
+          - name:  GEOIPUPDATE_CONF_FILE
+            value: "/tmp/geoip.conf"
+          - name:  GEOIPUPDATE_EDITION_IDS
+            value: "GeoLite2-City GeoLite2-Country GeoLite2-ASN"
+          - name:  GEOIPUPDATE_VERBOSE
+            value: "0"
+
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+            limits:
+              cpu: 500m
+              memory: 200Mi
+          volumeMounts:
+          - name: geodns-data
+            subPath: geoip
+            mountPath: /usr/share/GeoIP/
+          - name: tmp
+            mountPath: /tmp/
+
+      volumes:
+      - name: geodns-data
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
