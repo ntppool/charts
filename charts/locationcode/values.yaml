@@ -1,0 +1,16 @@
+image:
+  # -- image repository
+  repository: harbor.ntppool.org/library/locationcode
+  # -- image tag
+  tag: e926800
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+# -- Configures service settings for the chart. Normally this does not need to be modified.
+# @default -- See values.yaml
+service:
+  main:
+    ports:
+      http:
+        enabled: true
+        port: 8000

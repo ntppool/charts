@@ -12,3 +12,4 @@ publish:
 	${PUSH} charts/ntppool ntppool
 	${PUSH} charts/geoip   ntppool
 	${PUSH} charts/smtp    ntppool
+	${PUSH} charts/locationcode ntppool
