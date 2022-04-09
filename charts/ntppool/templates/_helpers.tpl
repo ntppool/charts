@@ -101,6 +101,8 @@ env:
       name: {{ include "ntppool.fullname" . }}-secrets
 - name: geoip_service
   value: {{ .Release.Name }}-geoip
+- name: locationcode_service
+  value: {{ .Release.Name }}-locationcode
 - name: splash_service
   value: {{ .Release.Name }}-splash
 - name: smtp_service
