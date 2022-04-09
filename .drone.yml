@@ -30,7 +30,7 @@ steps:
 #  - ct lint --debug
 
 - name: build
-  image: alpine/helm:3.7.1
+  image: alpine/helm:3.8.1
   environment:
     HELM_PASSWORD:
       from_secret: helm_password
@@ -39,7 +39,8 @@ steps:
     HELM_URL:
       from_secret: helm_repo_url
   commands:
-  - apk add --update make git
+  - apk add --update make git perl
+  - helm plugin install https://github.com/chartmuseum/helm-push.git
   - make publish
   when:
     branch:
