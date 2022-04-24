@@ -4,7 +4,9 @@
 {{- $labels := include "ntppool.labels" . -}}
 {{- $containerDefaults := include "ntppool.appContainerDefaults" . -}}
 {{- $volumes := include "ntppool.appVolumes" . -}}
+{{- $root   := . -}}
 {{- $values := .Values -}}
+{{- $jobGlobalValues := .Values.jobs.global -}}
 
 {{- range $name, $job := .Values.jobs }}
 {{- if and (ne $name "global") ($job.enabled) }}
@@ -25,8 +27,19 @@ spec:
           labels:
             {{- $labels | nindent 12 }}
             cron: {{ $name }}
+          annotations:
+            version: a
+          {{- with $values.podAnnotations }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with $jobGlobalValues.podAnnotations }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
         spec:
           activeDeadlineSeconds: 1800
+          serviceAccountName: {{ include "ntppool.serviceAccountName" $root }}
+          securityContext:
+            {{ toYaml $values.podSecurityContext | nindent 12 }}
           containers:
           {{ range $c := $job.containers }}
           - name: {{ default $name $c.name }}
