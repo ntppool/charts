@@ -18,7 +18,7 @@ metadata:
   labels:
     {{- $labels | nindent 4 }}
 spec:
-  concurrencyPolicy: {{ if $job.concurrencyPolicy }}{{ $job.concurrencyPolicy }}{{ else }}Forbid{{ end }}
+  concurrencyPolicy: {{ if $job.concurrencyPolicy }}{{ $job.concurrencyPolicy }}{{ else }}Replace{{ end }}
   failedJobsHistoryLimit: {{ if $job.failedJobsHistoryLimit }}{{ $job.failedJobsHistoryLimit }}{{ else }}2{{end}}
   jobTemplate:
     spec:
@@ -28,7 +28,6 @@ spec:
             {{- $labels | nindent 12 }}
             cron: {{ $name }}
           annotations:
-            version: a
           {{- with $values.podAnnotations }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -40,6 +39,10 @@ spec:
           serviceAccountName: {{ include "ntppool.serviceAccountName" $root }}
           securityContext:
             {{ toYaml $values.podSecurityContext | nindent 12 }}
+          {{- with $values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           containers:
           {{ range $c := $job.containers }}
           - name: {{ default $name $c.name }}
