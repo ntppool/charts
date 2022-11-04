@@ -41,3 +41,11 @@ persistence:
   # data:
   #   enabled: false
   #   mountPath: /data
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 50Mi
+  requests:
+    cpu: 10m
+    memory: 10Mi
