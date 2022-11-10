@@ -14,15 +14,13 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.4.16
+version: 0.4.17
 
 # application version (+default image tag)
 appVersion: prod-2022-02.0
 
 annotations:
   artifacthub.io/changes: |
-    - Support image pull secrets in cronjobs
-    - Replace instead of forbid duplicate cronjobs
     - Upgrade locationcode
 
 dependencies:
