@@ -5,6 +5,7 @@ use Carp qw(croak);
 
 my %repos = (
     "k8s-at-home-library" => "https://library-charts.k8s-at-home.com",
+    "bjw-s"               => "https://bjw-s.github.io/helm-charts/",
     "stable"              => "https://charts.helm.sh/stable",
 );
 
