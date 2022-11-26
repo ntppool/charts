@@ -1,15 +1,8 @@
-#
-# IMPORTANT NOTE
-#
-# This chart inherits from our common library chart. You can check the default values/options here:
-# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
-#
-
 image:
   # -- image repository
   repository: harbor.ntppool.org/ntppool/monitor-api
   # -- image tag, defaults to appVersion
-  #tag: 
+  #tag:
   # -- image pull policy
   pullPolicy: IfNotPresent
 
@@ -28,6 +21,10 @@ command:
 args:
   - server
 
+controller:
+  strategy: RollingUpdate
+  labels:
+    tier: frontend
 
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
@@ -37,7 +34,7 @@ service:
       #haproxy-ingress.github.io/secure-backends: "true"
       haproxy-ingress.github.io/health-check-uri: "/__health"
       haproxy-ingress.github.io/health-check-port: "8080"
-      
+
     ports:
       http:
         port: 443
@@ -49,6 +46,10 @@ service:
         port: 8080
         protocol: HTTP
 
+      metrics:
+        enabled: true
+        port: 9000
+        protocol: HTTP
 
 ingress:
   # -- Enable and configure ingress settings for the chart under this key.
@@ -89,3 +90,26 @@ probes:
       periodSeconds: 3
       successThreshold: 1
       timeoutSeconds: 1
+
+# Enable prometheus-operator monitors
+serviceMonitor:
+  main:
+    # -- Enables or disables the serviceMonitor.
+    enabled: false
+
+    endpoints:
+      - port: http
+        scheme: http
+        path: /metrics
+        interval: 20s
+        scrapeTimeout: 15s
+
+    #jobLabel: monitor-api
+
+resources:
+  limits:
+    cpu: 1
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
