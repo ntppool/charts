@@ -1,111 +1,67 @@
-# locationcode
+# monitor-api
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![AppVersion: build-92](https://img.shields.io/badge/AppVersion-build--92-informational?style=flat-square)
 
-locationcode helm package
+NTP Pool Monitoring API server
 
-**This chart is not maintained by the upstream project and any issues with the chart should be raised [here](https://github.com/k8s-at-home/charts/issues/new/choose)**
+## Maintainers
 
-## Source Code
-
-* <https://github.com/locationcode/locationcode-docker>
+| Name | Email | Url |
+| ---- | ------ | --- |
+| abh | <ask@develooper.com> |  |
 
 ## Requirements
 
 Kubernetes: `>=1.16.0-0`
 
-## Dependencies
-
 | Repository | Name | Version |
 |------------|------|---------|
-| https://library-charts.k8s-at-home.com | common | 4.0.0 |
-
-## TL;DR
-
-```console
-helm repo add k8s-at-home https://k8s-at-home.com/charts/
-helm repo update
-helm install locationcode k8s-at-home/locationcode
-```
-
-## Installing the Chart
-
-To install the chart with the release name `locationcode`
-
-```console
-helm install locationcode k8s-at-home/locationcode
-```
-
-## Uninstalling the Chart
-
-To uninstall the `locationcode` deployment
-
-```console
-helm uninstall locationcode
-```
-
-The command removes all the Kubernetes components associated with the chart **including persistent volumes** and deletes the release.
-
-## Configuration
-
-Read through the [values.yaml](./values.yaml) file. It has several commented out suggested values.
-Other values may be used from the [values.yaml](https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml) from the [common library](https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common).
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
-
-```console
-helm install locationcode \
-  --set env.TZ="America/New York" \
-    k8s-at-home/locationcode
-```
-
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart.
-
-```console
-helm install locationcode k8s-at-home/locationcode -f values.yaml
-```
-
-## Custom configuration
-
-N/A
+| https://bjw-s.github.io/helm-charts/ | common | 1.1.3 |
 
 ## Values
 
-**Important**: When deploying an application Helm chart you can add more values from our common library chart [here](https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common)
-
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| env | object | See below | environment variables. See more environment variables in the [locationcode documentation](https://locationcode.org/docs). |
+| args[0] | string | `"server"` |  |
+| command[0] | string | `"/app/monitor-api"` |  |
+| controller.labels.tier | string | `"frontend"` |  |
+| controller.strategy | string | `"RollingUpdate"` |  |
+| env | object | See below | environment variables. See more environment variables in the [monitor-api documentation](https://go.ntppool.org/monitor/cmd/monitor-api). |
 | env.TZ | string | `"UTC"` | Set the container timezone |
 | image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
-| image.repository | string | `"locationcode/locationcode"` | image repository |
-| image.tag | string | chart.appVersion | image tag |
+| image.repository | string | `"harbor.ntppool.org/ntppool/monitor-api"` | image repository |
 | ingress.main | object | See values.yaml | Enable and configure ingress settings for the chart under this key. |
 | persistence | object | See values.yaml | Configure persistence settings for the chart under this key. |
+| podLabels.tier | string | `"frontend"` |  |
+| probes.liveness.custom | bool | `true` |  |
+| probes.liveness.spec.failureThreshold | int | `2` |  |
+| probes.liveness.spec.httpGet.path | string | `"/__health"` |  |
+| probes.liveness.spec.httpGet.port | int | `8080` |  |
+| probes.liveness.spec.httpGet.scheme | string | `"HTTP"` |  |
+| probes.liveness.spec.initialDelaySeconds | int | `4` |  |
+| probes.liveness.spec.periodSeconds | int | `3` |  |
+| probes.liveness.spec.successThreshold | int | `1` |  |
+| probes.liveness.spec.timeoutSeconds | int | `1` |  |
+| probes.readiness.custom | bool | `true` |  |
+| probes.readiness.spec.failureThreshold | int | `2` |  |
+| probes.readiness.spec.httpGet.path | string | `"/__health"` |  |
+| probes.readiness.spec.httpGet.port | int | `8080` |  |
+| probes.readiness.spec.httpGet.scheme | string | `"HTTP"` |  |
+| probes.readiness.spec.initialDelaySeconds | int | `4` |  |
+| probes.readiness.spec.periodSeconds | int | `3` |  |
+| probes.readiness.spec.successThreshold | int | `1` |  |
+| probes.readiness.spec.timeoutSeconds | int | `1` |  |
+| resources.limits.cpu | int | `1` |  |
+| resources.limits.memory | string | `"512Mi"` |  |
+| resources.requests.cpu | string | `"100m"` |  |
+| resources.requests.memory | string | `"128Mi"` |  |
 | service | object | See values.yaml | Configures service settings for the chart. |
-
-## Changelog
-
-### Version 1.0.0
-
-#### Added
-
-- Initial version
-
-#### Changed
-
-N/A
-
-#### Fixed
-
-N/A
-
-## Support
-
-- See the [Docs](https://docs.k8s-at-home.com/our-helm-charts/getting-started/)
-- Open an [issue](https://github.com/k8s-at-home/charts/issues/new/choose)
-- Ask a [question](https://github.com/k8s-at-home/organization/discussions)
-- Join our [Discord](https://discord.gg/sTMX7Vh) community
+| serviceMonitor.main.enabled | bool | `false` | Enables or disables the serviceMonitor. |
+| serviceMonitor.main.endpoints[0].interval | string | `"20s"` |  |
+| serviceMonitor.main.endpoints[0].path | string | `"/metrics"` |  |
+| serviceMonitor.main.endpoints[0].port | string | `"http"` |  |
+| serviceMonitor.main.endpoints[0].scheme | string | `"http"` |  |
+| serviceMonitor.main.endpoints[0].scrapeTimeout | string | `"15s"` |  |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
