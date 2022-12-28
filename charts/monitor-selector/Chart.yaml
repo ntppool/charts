@@ -1,0 +1,19 @@
+apiVersion: v2
+appVersion: 3.2.0
+description: NTP Pool Monitoring - monitor selector / re-calibrator
+name: monitor-selector
+version: 0.3.0
+kubeVersion: ">=1.16.0-0"
+keywords:
+  - ntppool
+maintainers:
+  - name: abh
+    email: ask@develooper.com
+dependencies:
+  - name: common
+    version: 1.2.0
+    repository: https://bjw-s.github.io/helm-charts/
+annotations:
+  artifacthub.io/changes: |
+    - kind: changed
+      description: Initial chart
