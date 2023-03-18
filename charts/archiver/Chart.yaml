@@ -1,0 +1,21 @@
+apiVersion: v2
+appVersion: "1.2.2"
+description: NTP Pool Log Scores archiver
+name: archiver
+version: "1.2.0"
+kubeVersion: ">=1.16.0-0"
+keywords:
+  - ntppool
+maintainers:
+  - name: abh
+    email: ask@develooper.com
+dependencies:
+  - name: common
+    repository: https://library-charts.k8s-at-home.com
+    version: 4.3.0
+annotations:
+  artifacthub.io/changes: |
+    - kind: added
+      description: Upgrade Go and dependencies
+    - kind: removed
+      description: Remove InfluxDB support
