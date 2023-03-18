@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: build-92
+appVersion: 3.3.0
 description: NTP Pool Monitoring API server
 name: monitor-api
-version: 0.2.1
+version: 0.3.0
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -11,11 +11,11 @@ maintainers:
     email: ask@develooper.com
 dependencies:
   - name: common
-    version: 1.1.3
+    version: 1.2.0
     repository: https://bjw-s.github.io/helm-charts/
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: v3.1.0 - Scoring tool
-    - kind: changed
-      description: update common chart
+      description: Upgrade monitor to support selector
+    - kind: added
+      description: "Right now" checks with MQTT

@@ -41,6 +41,11 @@ service:
         targetPort: 8000
         protocol: TCP
 
+      api:
+        port: 80
+        targetPort: 8095
+        protocol: TCP
+
       health:
         enabled: true
         port: 8080
@@ -98,7 +103,7 @@ serviceMonitor:
     enabled: false
 
     endpoints:
-      - port: http
+      - port: metrics
         scheme: http
         path: /metrics
         interval: 20s
