@@ -8,13 +8,32 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install,post-upgrade"
     "helm.sh/hook-delete-policy": hook-succeeded
+
+{{- $root   := . -}}
+{{- $values := .Values -}}
+{{- $jobGlobalValues := .Values.jobs.global }}
+
 spec:
   template:
     metadata:
       labels:
         {{- include "ntppool.labels" . | nindent 8 }}
+      annotations:
+      {{- with $values.podAnnotations }}
+        {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $jobGlobalValues.podAnnotations }}
+        {{ toYaml . | nindent 8 }}
+      {{ end }}
     spec:
       restartPolicy: OnFailure
+      serviceAccountName: {{ include "ntppool.serviceAccountName" $root }}
+      securityContext:
+        {{ toYaml $values.podSecurityContext | nindent 12 }}
+      {{- with $values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 12 }}
+      {{- end }}
       containers:
       - name: post-install-job
         command:

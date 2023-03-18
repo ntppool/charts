@@ -89,6 +89,11 @@ env:
     secretKeyRef:
       key: db_pass
       name: {{ include "ntppool.fullname" . }}-secrets
+- name: db_auth_file
+  valueFrom:
+    secretKeyRef:
+      key: db_auth_file
+      name: {{ include "ntppool.fullname" . }}-secrets
 - name: account_id_key
   valueFrom:
     secretKeyRef:
