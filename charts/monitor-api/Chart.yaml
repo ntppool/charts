@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 3.3.0
+appVersion: 3.3.2
 description: NTP Pool Monitoring API server
 name: monitor-api
-version: 0.3.0
+version: 1.0.0
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -16,6 +16,6 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Upgrade monitor to support selector
+      description: protobuf updates
     - kind: added
-      description: "Right now" checks with MQTT
+      description: production tested
