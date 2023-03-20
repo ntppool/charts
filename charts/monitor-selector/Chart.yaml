@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 3.2.0
+appVersion: 3.3.2
 description: NTP Pool Monitoring - monitor selector / re-calibrator
 name: monitor-selector
-version: 0.3.0
+version: 1.0.0
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -16,4 +16,4 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Initial chart
+      description: Update selection calculation slightly (v3.3.2 app)
