@@ -1,0 +1,94 @@
+image:
+  # -- image repository
+  repository: harbor.ntppool.org/ntppool/monitor-api
+  # -- image tag, defaults to appVersion
+  #tag:
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+# -- environment variables. See more environment variables in the [monitor-api documentation](https://go.ntppool.org/monitor/cmd/monitor-api).
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: UTC
+
+podLabels:
+  tier: scorer
+
+command:
+  - /app/monitor-scorer
+
+args:
+  - scorer
+  - server
+
+controller:
+  strategy: RollingUpdate
+  labels:
+    tier: scorer
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    enabled: false
+    
+  #    health:
+  #      enabled: true
+  #      port: 8080
+  #      protocol: HTTP
+
+  #    metrics:
+  #      enabled: true
+  #      port: 9000
+  #      protocol: HTTP
+
+
+#probes:
+#  liveness:
+#    custom: true
+#    spec:
+#      failureThreshold: 2
+#      httpGet:
+#        path: /__health
+#        port: 8080
+#        scheme: HTTP
+#      initialDelaySeconds: 4
+#      periodSeconds: 3
+#      successThreshold: 1
+#      timeoutSeconds: 1
+#  readiness:
+#    custom: true
+#    spec:
+#      failureThreshold: 2
+#      httpGet:
+#        path: /__health
+#        port: 8080
+#        scheme: HTTP
+#      initialDelaySeconds: 4
+#      periodSeconds: 3
+#      successThreshold: 1
+#      timeoutSeconds: 1
+
+# Enable prometheus-operator monitors
+serviceMonitor:
+  main:
+    # -- Enables or disables the serviceMonitor.
+    enabled: false
+
+    endpoints:
+      - port: http
+        scheme: http
+        path: /metrics
+        interval: 20s
+        scrapeTimeout: 15s
+
+    #jobLabel: monitor-api
+
+resources:
+  limits:
+    cpu: 1
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
