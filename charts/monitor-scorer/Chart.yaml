@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 3.3.2
+appVersion: 3.4.0
 description: NTP Pool Monitoring scoring
 name: monitor-scorer
-version: 1.0.0
+version: 1.0.1
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -16,7 +16,5 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Tweaks to scorer and selector from production release
-    - kind: added
-      description: First public chart
+      description: Upgrade app
       
