@@ -57,7 +57,7 @@ spec:
               containerPort: 8299
               protocol: TCP
           readinessProbe:
-            failureThreshold: 3
+            failureThreshold: 2
             httpGet:
               httpHeaders:
               - name: Host
@@ -68,7 +68,20 @@ spec:
             initialDelaySeconds: 4
             periodSeconds: 3
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 4
+            httpGet:
+              httpHeaders:
+              - name: Host
+                value: web.ntp.cluster
+              path: /combust-healthz
+              port: 8299
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
         - name: httpd-cron
           command:
           - /ntppool/docker/entrypoint

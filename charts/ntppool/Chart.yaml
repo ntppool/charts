@@ -14,15 +14,14 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.5.0
+version: 0.5.2
 
 # application version (+default image tag)
-appVersion: prod-2023.03.0
+appVersion: prod-2023.03.2
 
 annotations:
   artifacthub.io/changes: |
-    - New monitoring system
-    - Make database upgrade job use pod annotations (for vault agent setup)
+    - Various production bugfixes
 
 dependencies:
 - name: mysql

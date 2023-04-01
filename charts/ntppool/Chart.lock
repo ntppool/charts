@@ -7,7 +7,7 @@ dependencies:
   version: 0.3.0
 - name: splash
   repository: https://charts.ntppool.org/
-  version: 1.0.2
+  version: 1.0.4
 - name: smtp
   repository: https://charts.ntppool.org/
   version: 1.0.1
@@ -17,5 +17,5 @@ dependencies:
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:eafec1e1638dc834be61eb67f2317acff36198f5ad89c006c92ec954249fd359
-generated: "2022-11-11T16:48:29.682187-08:00"
+digest: sha256:3f3808468cc3fbe5c573ba5e401d7bf4c5f70312006754a2acfe5308f4ac43e9
+generated: "2023-04-01T15:35:45.815055-07:00"

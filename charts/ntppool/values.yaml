@@ -135,7 +135,7 @@ jobs:
 resources:
   limits:
     cpu: 2
-    memory: 1400Mi
+    memory: 2000Mi
   requests:
     cpu: 10m
     # in development ~300Mi is fine, production needs more
