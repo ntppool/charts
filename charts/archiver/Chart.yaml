@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: "1.2.2"
+appVersion: "1.3.0"
 description: NTP Pool Log Scores archiver
 name: archiver
-version: "1.2.0"
+version: "1.3.0"
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -16,6 +16,4 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: added
-      description: Upgrade Go and dependencies
-    - kind: removed
-      description: Remove InfluxDB support
+      description: Added retention_days environment option
