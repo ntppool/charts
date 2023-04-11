@@ -14,14 +14,16 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.5.2
+version: 0.5.3
 
 # application version (+default image tag)
-appVersion: prod-2023.03.2
+appVersion: prod-2023.04.1
 
 annotations:
   artifacthub.io/changes: |
     - Various production bugfixes
+  artifacthub.io/changes: |
+    - Replace splash with screensnap
 
 dependencies:
 - name: mysql
@@ -31,10 +33,10 @@ dependencies:
 - name: geoip
   version: 0.x.x
   repository: https://charts.ntppool.org/
-- name: splash
+- name: screensnap
   version: 1.x.x
   repository: https://charts.ntppool.org/
-  condition: splash.enabled
+  condition: screensnap.enabled
 - name: smtp
   version: 1.x.x
   repository: https://charts.ntppool.org/

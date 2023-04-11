@@ -108,8 +108,8 @@ env:
   value: {{ .Release.Name }}-geoip
 - name: locationcode_service
   value: {{ .Release.Name }}-locationcode
-- name: splash_service
-  value: {{ .Release.Name }}-splash
+- name: screensnap_service
+  value: {{ .Release.Name }}-screensnap
 - name: smtp_service
   value: {{ .Release.Name }}-smtp
 envFrom:

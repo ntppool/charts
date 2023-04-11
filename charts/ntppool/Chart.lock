@@ -5,9 +5,9 @@ dependencies:
 - name: geoip
   repository: https://charts.ntppool.org/
   version: 0.3.0
-- name: splash
+- name: screensnap
   repository: https://charts.ntppool.org/
-  version: 1.0.4
+  version: 1.0.0
 - name: smtp
   repository: https://charts.ntppool.org/
   version: 1.0.1
@@ -17,5 +17,5 @@ dependencies:
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:3f3808468cc3fbe5c573ba5e401d7bf4c5f70312006754a2acfe5308f4ac43e9
-generated: "2023-04-01T15:35:45.815055-07:00"
+digest: sha256:9b4645218ef860223cab0e0170e194db70081f2a01fcccc39ba4f859fc379d75
+generated: "2023-04-03T01:45:01.405825-07:00"

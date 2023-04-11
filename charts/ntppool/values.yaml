@@ -158,9 +158,9 @@ affinity: {}
 geoip:
   enabled: true
 
-splash:
+screensnap:
   enabled: false
-  appVersion: 3.3.1
+  appVersion: main
 
 mysql:
   enabled: false
