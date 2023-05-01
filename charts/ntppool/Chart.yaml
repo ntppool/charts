@@ -14,16 +14,14 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.5.3
+version: 0.5.4
 
 # application version (+default image tag)
 appVersion: prod-2023.04.1
 
 annotations:
   artifacthub.io/changes: |
-    - Various production bugfixes
-  artifacthub.io/changes: |
-    - Replace splash with screensnap
+    - Upgrade subcharts (screensnap, locationcode)
 
 dependencies:
 - name: mysql
@@ -41,7 +39,7 @@ dependencies:
   version: 1.x.x
   repository: https://charts.ntppool.org/
 - name: locationcode
-  version: ~1.0.1
+  version: 1.x.x
   repository: https://charts.ntppool.org/
 - name: common
   repository: https://library-charts.k8s-at-home.com
