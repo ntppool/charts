@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 3.4.1
+appVersion: 3.4.2
 description: NTP Pool Monitoring API server
 name: monitor-api
-version: 1.0.2
+version: 1.0.3
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -11,7 +11,7 @@ maintainers:
     email: ask@develooper.com
 dependencies:
   - name: common
-    version: 1.3.2
+    version: 1.5.0
     repository: https://bjw-s.github.io/helm-charts/
 annotations:
   artifacthub.io/changes: |
