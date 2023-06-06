@@ -1,3 +1,4 @@
+---
 kind: pipeline
 type: kubernetes
 name: default
@@ -30,7 +31,7 @@ steps:
 #  - ct lint --debug
 
 - name: build
-  image: alpine/helm:3.8.1
+  image: alpine/helm:3.12.0
   environment:
     HELM_PASSWORD:
       from_secret: helm_password
@@ -46,3 +47,8 @@ steps:
     branch:
       include:
       - main
+---
+kind: signature
+hmac: 2e662a3b73f711793af93bc458d33871e876152375fd92ddcf854b487c131140
+
+...
