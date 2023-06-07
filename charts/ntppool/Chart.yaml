@@ -2,26 +2,19 @@ apiVersion: v2
 name: ntppool
 description: NTP Pool System
 home: https://github.com/abh/ntppool/
-
-# A chart can be either an 'application' or a 'library' chart.
-#
-# Application charts are a collection of templates that can be packaged into versioned archives
-# to be deployed.
-#
-# Library charts provide useful utilities or functions for the chart developer. They're included as
-# a dependency of application charts to inject those utilities and functions into the rendering
-# pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
 
 # This is the chart version.
-version: 0.5.4
+version: 0.5.5
 
 # application version (+default image tag)
-appVersion: prod-2023.04.1
+appVersion: prod-2023.06.1
 
 annotations:
   artifacthub.io/changes: |
-    - Upgrade subcharts (screensnap, locationcode)
+    - Upgrade application
+  artifacthub.io/changes: |
+    - Upgrade subcharts (geoip, smtp)
 
 dependencies:
 - name: mysql
@@ -36,7 +29,7 @@ dependencies:
   repository: https://charts.ntppool.org/
   condition: screensnap.enabled
 - name: smtp
-  version: 1.x.x
+  version: 2.x.x
   repository: https://charts.ntppool.org/
 - name: locationcode
   version: 1.x.x
