@@ -31,9 +31,9 @@ my %charts = map { $_ => 1 } @charts;
 
 say "publish ", join ", ", @publish;
 
-run(qq[helm --username "\$HELM_USERNAME" --password="\$HELM_PASSWORD" repo add ntppool ${helm_url}],
-    {silent => 1}
-    );
+#run(qq[helm --username "\$HELM_USERNAME" --password="\$HELM_PASSWORD" repo add ntppool ${helm_url}], {silent => 1});
+
+run(qq[helm repo add ntppush ${helm_url}], {silent => 0});
 
 for my $repo (sort keys %repos) {
     run(qq[helm repo add "$repo" "$repos{$repo}"]);
@@ -41,11 +41,13 @@ for my $repo (sort keys %repos) {
 
 run("helm repo update");
 
-for my $chart (@publish) {
-    run("helm dependency build $chart");
-    run("helm cm-push $chart ntppool");
-}
+mkdir "build" or die "could not create build directory: $!";
 
+for my $chart (@publish) {
+    #run("helm dependency build $chart");
+    run("helm package -d build/ -u $chart");
+    run("helm s3 push --relative build/$chart*.tgz ntppush");  # add --ignore-if-exists ?
+}
 
 sub run {
     my @ar    = @_;

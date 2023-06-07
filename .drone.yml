@@ -39,9 +39,18 @@ steps:
       from_secret: helm_username
     HELM_URL:
       from_secret: helm_repo_url
+    AWS_ACCESS_KEY_ID:
+      from_secret: AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: AWS_SECRET_ACCESS_KEY
+    AWS_ENDPOINT:
+      from_secret: AWS_ENDPOINT
+    HELM_S3_REGION:
+      value: "east"
+
   commands:
   - apk add --update make git perl
-  - helm plugin install https://github.com/chartmuseum/helm-push.git
+  - helm plugin install https://github.com/hypnoglow/helm-s3.git
   - make publish
   when:
     branch:
@@ -49,6 +58,6 @@ steps:
       - main
 ---
 kind: signature
-hmac: 2e662a3b73f711793af93bc458d33871e876152375fd92ddcf854b487c131140
+hmac: 21fa0beee5284b8fd6b9b7e532d694fddfef081c68ce245c4c26256fb8fd335d
 
 ...
