@@ -5,13 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: namshi/smtp
+  repository: ixdotai/smtp
   pullPolicy: IfNotPresent
 
 # name of existing secret with an smtp config
 existingSecret:
 
-# documentation for keys at https://hub.docker.com/r/namshi/smtp/
+# documentation for keys at https://github.com/ix-ai/smtp
 config:
   #MAILNAME: smtp
   DISABLE_IPV6: "1"

@@ -1,9 +1,11 @@
 # smtp
 
-This chart installs [namshi/smtp](https://hub.docker.com/r/namshi/smtp/) in kubernetes to work as a mail relay.
+This chart installs an [smtp daemon](https://github.com/ix-ai/smtp) in
+kubernetes to work as a mail relay.
 
-The recommended approach is to configure it with authentication
-to a mail service and then from other applications within the cluster (or namespace) send mail to this relay.
+The recommended approach is to configure it with authentication to a
+mail service and then from other applications within the cluster (or
+namespace) send mail to this relay.
 
 ## Configuration
 
@@ -20,7 +22,9 @@ config:
 ```
 
 One quirk is that for authentication to work, the name of the mail
-server in SMARTHOST_ADDRESS has to be covered/included in the SMARTHOST_ALIASES setting.
+server in SMARTHOST_ADDRESS has to be covered/included in the
+SMARTHOST_ALIASES setting.
 
-You can also use Gmail or Amazon SES with less configuration using the
-configuration values documented in [namshi/smtp](https://hub.docker.com/r/namshi/smtp/).
+You can also use Gmail or Amazon SES with just a couple of
+configuration values as described in the
+[ix-ai/smtp](https://github.com/ix-ai/smtp#smtp) documentation.
