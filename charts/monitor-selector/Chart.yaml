@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 3.4.2
+appVersion: 3.5.0
 description: NTP Pool Monitoring - monitor selector / re-calibrator
 name: monitor-selector
-version: 1.0.3
+version: 1.1.0
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
