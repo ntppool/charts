@@ -39,7 +39,6 @@ spec:
         command:
           - /ntppool/docker/entrypoint
         args:
-          - sh
           - /ntppool/bin/initialize_schema
         {{- include "ntppool.appContainerDefaults" . | nindent 8 }}
         resources:
