@@ -4,15 +4,17 @@ description: exim based smtp smarthost / mail relay
 home: https://github.com/ix-ai/smtp
 type: application
 
-# This is the chart version. This version number should be incremented each time you make changes
+# This is the chart version. This version number should be
+# incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 2.0.0
+version: 2.0.1
 
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application.
+# This is the version number of the application being deployed.
 appVersion: v0.4.0
 
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Upgrade application image (switch to ix-ai/smtp image)
+      description: Clarify configuration options in the default values file
+    - kind: changed
+      description: List all default image repository options

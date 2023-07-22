@@ -1,17 +1,21 @@
 # Default values for smtp.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: ixdotai/smtp
+  # github container registry
+  repository: ghcr.io/ix-ai/smtp
+  # docker hub
+  # repository: ixdotai/smtp
+  # gitlab registry
+  # repository: registry.gitlab.com/ix.ai/smtp
   pullPolicy: IfNotPresent
 
 # name of existing secret with an smtp config
 existingSecret:
 
-# documentation for keys at https://github.com/ix-ai/smtp
+# any variables supported by ix-ai/smtp can be added here
+# see https://github.com/ix-ai/smtp#readme for a full list
 config:
   #MAILNAME: smtp
   DISABLE_IPV6: "1"
