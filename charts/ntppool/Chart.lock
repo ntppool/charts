@@ -10,12 +10,12 @@ dependencies:
   version: 1.0.1
 - name: smtp
   repository: https://charts.ntppool.org/
-  version: 2.0.0
+  version: 2.0.1
 - name: locationcode
   repository: https://charts.ntppool.org/
   version: 1.0.6
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:87417e7fd50250128784fdc7a76795de314e944b37e1c2b60fe1f168db9f58dc
-generated: "2023-06-07T00:39:54.674766-07:00"
+digest: sha256:4276154883d00794a9714c98069334ef262943f5f5e1405386c58b316f152b49
+generated: "2023-07-28T22:55:21.200951-07:00"

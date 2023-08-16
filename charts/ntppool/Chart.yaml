@@ -5,16 +5,14 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.5.5
+version: 0.5.6
 
 # application version (+default image tag)
-appVersion: prod-2023.06.1
+appVersion: prod-2023.08.1
 
 annotations:
   artifacthub.io/changes: |
     - Upgrade application
-  artifacthub.io/changes: |
-    - Upgrade subcharts (geoip, smtp)
 
 dependencies:
 - name: mysql
