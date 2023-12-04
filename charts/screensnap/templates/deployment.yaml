@@ -33,16 +33,22 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+            - name: metrics
+              containerPort: 8001
+              protocol: TCP
+            - name: health
+              containerPort: 8002
+              protocol: TCP
           livenessProbe:
             periodSeconds: 45
             httpGet:
               path: /__health
-              port: http
+              port: health
           readinessProbe:
             periodSeconds: 20
             httpGet:
               path: /__health
-              port: http
+              port: health
           env:
             - name: upstream_base
               value: {{ .Values.upstream_base }}
