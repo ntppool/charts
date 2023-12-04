@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         {{- include "screensnap.selectorLabels" . | nindent 8 }}
+      annotations:
+        instrumentation.opentelemetry.io/inject-sdk: "true"
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
