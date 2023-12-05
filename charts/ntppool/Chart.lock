@@ -13,9 +13,9 @@ dependencies:
   version: 2.0.1
 - name: locationcode
   repository: https://charts.ntppool.org/
-  version: 1.0.6
+  version: 1.0.7
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:4276154883d00794a9714c98069334ef262943f5f5e1405386c58b316f152b49
-generated: "2023-07-28T22:55:21.200951-07:00"
+digest: sha256:8f29fa7f9346c0dd1d6465b36367fa74174731b2ab4cb60bbb9a22c679d20c8a
+generated: "2023-10-10T02:15:35.550716-07:00"

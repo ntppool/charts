@@ -75,7 +75,7 @@ spec:
               httpHeaders:
               - name: Host
                 value: web.ntp.cluster
-              path: /combust-healthz
+              path: /__health
               port: 8299
               scheme: HTTP
             initialDelaySeconds: 10
