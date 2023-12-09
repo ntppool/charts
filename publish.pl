@@ -9,14 +9,13 @@ my %repos = (
     "stable"              => "https://charts.helm.sh/stable",
 );
 
-
 chdir "charts" or die "could not chdir to charts: $!";
 
 my @charts = grep { -d $_ } glob "*";
 
 my @publish;
 
-my $helm_url      = $ENV{HELM_URL};
+my $helm_url = $ENV{HELM_URL};
 
 my $commit = $ENV{DRONE_COMMIT_MESSAGE};
 
@@ -44,9 +43,14 @@ run("helm repo update");
 mkdir "build" or die "could not create build directory: $!";
 
 for my $chart (@publish) {
+
     #run("helm dependency build $chart");
     run("helm package -d build/ -u $chart");
-    run("helm s3 push --relative build/$chart*.tgz ntppush");  # add --ignore-if-exists ?
+    run("helm s3 push --relative build/$chart*.tgz ntppush");    # add --ignore-if-exists ?
+}
+
+if ($ENV{FASTLY_API_TOKEN} && $ENV{FASTLY_SERVICE_ID}) {
+    run("fastly -i purge --soft --url http://charts.ntppool.org/charts/index.yaml");
 }
 
 sub run {

@@ -31,7 +31,7 @@ steps:
 #  - ct lint --debug
 
 - name: build
-  image: alpine/helm:3.12.0
+  image: alpine/helm:3.13.2
   environment:
     HELM_PASSWORD:
       from_secret: helm_password
@@ -47,17 +47,21 @@ steps:
       from_secret: AWS_ENDPOINT
     HELM_S3_REGION:
       value: "east"
+    FASTLY_API_TOKEN:
+      from_secret: FASTLY_API_TOKEN
+    FASTLY_SERVICE_ID:
+      from_secret: FASTLY_SERVICE_ID
 
   commands:
   - apk add --update make git perl
   - helm plugin install https://github.com/hypnoglow/helm-s3.git
-  - make publish
+  - make fastly publish
   when:
     branch:
       include:
       - main
 ---
 kind: signature
-hmac: 21fa0beee5284b8fd6b9b7e532d694fddfef081c68ce245c4c26256fb8fd335d
+hmac: 2182b89e47e6a60e463da7256068ce32d35b1fd07c771370a17cc0ee24538022
 
 ...
