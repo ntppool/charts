@@ -1,0 +1,116 @@
+image:
+  # -- image repository
+  repository: harbor.ntppool.org/ntppool/data-api
+  # -- image tag, defaults to appVersion
+  #tag:
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: UTC
+
+  # KAFKA_CA: /etc/tls/kafka-ca/ca.crt
+  # KAFKA_KEY: /etc/tls/kafka/user.key
+  # KAFKA_CERT: /etc/tls/kafka/user.crt
+
+  # TLS_KEY: /etc/tls/app/tls.key
+  # TLS_CERT: /etc/tls/app/tls.crt
+
+podLabels:
+  tier: api
+
+command:
+  - /app/data-api
+  - server
+
+#args:
+#  - server
+
+controller:
+  strategy: RollingUpdate
+  labels:
+    tier: api
+
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
+service:
+  main:
+    annotations:
+      {}
+      # haproxy-ingress.github.io/secure-backends: "true"
+
+    ports:
+      http:
+        port: 80
+        targetPort: 8030
+        protocol: TCP
+
+      health:
+        enabled: true
+        port: 9020
+        protocol: HTTP
+
+      metrics:
+        enabled: true
+        port: 9019
+        protocol: HTTP
+
+ingress:
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: false
+
+# -- Configure persistence settings for the chart under this key.
+# @default -- See values.yaml
+
+probes:
+  liveness:
+    custom: true
+    spec:
+      failureThreshold: 2
+      httpGet:
+        path: /__health
+        port: health
+        scheme: HTTP
+      initialDelaySeconds: 4
+      periodSeconds: 3
+      successThreshold: 1
+      timeoutSeconds: 1
+  readiness:
+    custom: true
+    spec:
+      failureThreshold: 2
+      httpGet:
+        path: /__health
+        port: health
+        scheme: HTTP
+      initialDelaySeconds: 4
+      periodSeconds: 3
+      successThreshold: 1
+      timeoutSeconds: 1
+
+# # Enable prometheus-operator monitors
+# serviceMonitor:
+#   main:
+#     # -- Enables or disables the serviceMonitor.
+#     enabled: false
+
+#     endpoints:
+#       - port: metrics
+#         scheme: http
+#         path: /metrics
+#         interval: 20s
+#         scrapeTimeout: 15s
+
+#     #jobLabel: data-api
+
+resources:
+  limits:
+    cpu: 2
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
