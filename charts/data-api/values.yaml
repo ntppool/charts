@@ -1,37 +1,72 @@
-image:
-  # -- image repository
-  repository: harbor.ntppool.org/ntppool/data-api
-  # -- image tag, defaults to appVersion
-  #tag:
-  # -- image pull policy
-  pullPolicy: IfNotPresent
+controllers:
+  main:
+    strategy: RollingUpdate
+    labels:
+      tier: api
+      app: data-api
 
-# @default -- See below
-env:
-  # -- Set the container timezone
-  TZ: UTC
+    containers:
+      main:
+        command:
+        - /app/data-api
+        - server
+        image:
+          repository: harbor.ntppool.org/ntppool/data-api
+          tag: 0.2.1
+          # with common 2.4.x
+          # tag: "{{.Chart.AppVersion}}"
+          pullPolicy: IfNotPresent
 
-  # KAFKA_CA: /etc/tls/kafka-ca/ca.crt
-  # KAFKA_KEY: /etc/tls/kafka/user.key
-  # KAFKA_CERT: /etc/tls/kafka/user.crt
+        resources:
+          limits:
+            cpu: 2
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
 
-  # TLS_KEY: /etc/tls/app/tls.key
-  # TLS_CERT: /etc/tls/app/tls.crt
+        probes:
+          liveness:
+            custom: true
+            spec:
+              failureThreshold: 2
+              httpGet:
+                path: /__health
+                port: health
+                scheme: HTTP
+              initialDelaySeconds: 4
+              periodSeconds: 3
+              successThreshold: 1
+              timeoutSeconds: 1
+          readiness:
+            custom: true
+            spec:
+              failureThreshold: 2
+              httpGet:
+                path: /__health
+                port: health
+                scheme: HTTP
+              initialDelaySeconds: 4
+              periodSeconds: 3
+              successThreshold: 1
+              timeoutSeconds: 1
 
-podLabels:
-  tier: api
+        env:
+          # -- Set the container timezone
+          TZ: UTC
 
-command:
-  - /app/data-api
-  - server
+          # KAFKA_CA: /etc/tls/kafka-ca/ca.crt
+          # KAFKA_KEY: /etc/tls/kafka/user.key
+          # KAFKA_CERT: /etc/tls/kafka/user.crt
 
-#args:
-#  - server
+          # TLS_KEY: /etc/tls/app/tls.key
+          # TLS_CERT: /etc/tls/app/tls.crt
 
-controller:
-  strategy: RollingUpdate
+defaultPodOptions:
   labels:
     tier: api
+    app: data-api
+
 
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
@@ -66,31 +101,7 @@ ingress:
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
 
-probes:
-  liveness:
-    custom: true
-    spec:
-      failureThreshold: 2
-      httpGet:
-        path: /__health
-        port: health
-        scheme: HTTP
-      initialDelaySeconds: 4
-      periodSeconds: 3
-      successThreshold: 1
-      timeoutSeconds: 1
-  readiness:
-    custom: true
-    spec:
-      failureThreshold: 2
-      httpGet:
-        path: /__health
-        port: health
-        scheme: HTTP
-      initialDelaySeconds: 4
-      periodSeconds: 3
-      successThreshold: 1
-      timeoutSeconds: 1
+
 
 # # Enable prometheus-operator monitors
 # serviceMonitor:
@@ -107,10 +118,12 @@ probes:
 
 #     #jobLabel: data-api
 
-resources:
-  limits:
-    cpu: 2
-    memory: 1024Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+serviceMonitor:
+  main:
+    enabled: true
+    endpoints:
+      - port: metrics
+        scheme: http
+        path: /metrics
+        interval: 20s
+        scrapeTimeout: 15s
