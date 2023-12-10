@@ -8,7 +8,7 @@ type: application
 version: 0.5.7
 
 # application version (+default image tag)
-appVersion: prod-2023.11.2
+appVersion: prod-2023.12.0
 
 annotations:
   artifacthub.io/changes: |
@@ -22,6 +22,10 @@ dependencies:
 - name: geoip
   version: 0.x.x
   repository: https://charts.ntppool.org/
+- name: data-api
+  version: 0.x.x
+  repository: https://charts.ntppool.org/
+  condition: data-api.enabled
 - name: screensnap
   version: 1.x.x
   repository: https://charts.ntppool.org/

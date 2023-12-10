@@ -2,11 +2,12 @@
 
 {{ $g := . }}
 {{ $values := $g.Values }}
-{{ $config := .Values.config }}
+{{ $config := .Values.config -}}
 
 {{ $fullName := include "ntppool.fullname" . -}}
+{{ $dataAPI  := index $values "data-api" -}}
 
-{{ range $ingress_type := .Values.ingress.types }}
+{{ range $ingress_type := .Values.ingress.types -}}
 ---
 {{ $svcPort := $values.service.port -}}
 apiVersion: networking.k8s.io/v1
@@ -22,6 +23,11 @@ apiVersion: networking.k8s.io/v1
 {{ else }}
 {{   $tls = eq $config.web_tls "yes" }}
 {{ end }}
+
+{{ $dataAPIService := printf "%s-%s" $fullName "-data-api" -}}
+{{ if ne $dataAPI.serviceName "" -}}
+{{   $dataAPIService = $dataAPI.serviceName -}}
+{{ end -}}
 
 kind: Ingress
 metadata:
@@ -54,8 +60,8 @@ spec:
       secretName: {{ $fullName }}-{{ $ingress_type }}-tls
 {{ end }}
   rules:
-  {{ range $hosts }}
-    - host: {{ . | quote }}
+  {{ range $idx, $h := $hosts }}
+    - host: {{ $h | quote }}
       http:
         paths:
           - path: /
@@ -65,6 +71,15 @@ spec:
                 name: {{ $fullName }}
                 port:
                   number: {{ $svcPort }}
+      {{ if and (eq $idx 0) (eq $ingress_type "web") }}
+          - path: /graph/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-data-api
+                port:
+                  number: 80
+      {{ end }}
   {{ end }}
 {{ end }}
 {{ end }}

@@ -5,9 +5,12 @@ dependencies:
 - name: geoip
   repository: https://charts.ntppool.org/
   version: 0.3.1
+- name: data-api
+  repository: https://charts.ntppool.org/
+  version: 0.9.1
 - name: screensnap
   repository: https://charts.ntppool.org/
-  version: 1.0.1
+  version: 1.1.0
 - name: smtp
   repository: https://charts.ntppool.org/
   version: 2.0.1
@@ -17,5 +20,5 @@ dependencies:
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:8f29fa7f9346c0dd1d6465b36367fa74174731b2ab4cb60bbb9a22c679d20c8a
-generated: "2023-10-10T02:15:35.550716-07:00"
+digest: sha256:693fdd56c6a56d8b6777be05b2171c0af4aebfc91bf6fb7dac398573eaf50fec
+generated: "2023-12-09T19:09:38.1817-08:00"

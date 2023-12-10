@@ -28,14 +28,16 @@ spec:
       {{- if ne .Values.config.deployment_mode "devel" }}
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: tier
-                operator: In
-                values:
-                - frontend
-            topologyKey: kubernetes.io/hostname
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: tier
+                  operator: In
+                  values:
+                  - frontend
+              topologyKey: kubernetes.io/hostname
       {{- end }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -68,7 +70,7 @@ spec:
             initialDelaySeconds: 4
             periodSeconds: 3
             successThreshold: 1
-            timeoutSeconds: 2
+            timeoutSeconds: 5
           livenessProbe:
             failureThreshold: 4
             httpGet:
@@ -81,7 +83,7 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 5
             successThreshold: 1
-            timeoutSeconds: 3
+            timeoutSeconds: 10
         - name: httpd-cron
           command:
           - /ntppool/docker/entrypoint
