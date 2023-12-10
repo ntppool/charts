@@ -32,7 +32,7 @@ controllers:
               failureThreshold: 2
               httpGet:
                 path: /__health
-                port: health
+                port: 9020
                 scheme: HTTP
               initialDelaySeconds: 4
               periodSeconds: 3
@@ -44,7 +44,7 @@ controllers:
               failureThreshold: 2
               httpGet:
                 path: /__health
-                port: health
+                port: 9020
                 scheme: HTTP
               initialDelaySeconds: 4
               periodSeconds: 3
@@ -84,12 +84,12 @@ service:
 
       health:
         enabled: true
-        port: 9020
+        port: 9019
         protocol: HTTP
 
       metrics:
         enabled: true
-        port: 9019
+        port: 9020
         protocol: HTTP
 
 ingress:
