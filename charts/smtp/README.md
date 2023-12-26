@@ -14,11 +14,16 @@ values you set):
 
 ```
 config:
+  # See documentation at https://github.com/ix-ai/smtp#readme
   #SMARTHOST_ADDRESS: mail.example.com
   #SMARTHOST_PORT: "587"
   #SMARTHOST_USER: myuser
   #SMARTHOST_PASSWORD: secret
   #SMARTHOST_ALIASES: "*.example.com"
+
+  # colon separated, must start with : !
+  RELAY_NETWORKS: :10.42.0.0/16
+
 ```
 
 One quirk is that for authentication to work, the name of the mail

@@ -15,4 +15,4 @@ appVersion: v0.5.2
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: Upgrade application version
+      description: "Upgrade application version"
