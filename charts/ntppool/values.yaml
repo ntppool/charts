@@ -72,6 +72,7 @@ ingress:
   types:
     - web
     - manage
+    - data-api
 
   # class:
 
@@ -88,15 +89,15 @@ jobs:
     containers:
       - name: cleanup
         args: ["sh", "/ntppool/combust/bin/cron/hourly"]
-    schedule: "12,32,52 * * * *"
-  invite-cleanup:
+    schedule: "12 * * * *"
+  db-cleanup:
     enabled: true
     containers:
-      - name: zone-stats
+      - name: db-cleanup
         args:
           - sh
-          - /ntppool/bin/cron/invite-cleanup
-    schedule: "17,47 * * * *"
+          - /ntppool/bin/cron/db-cleanup
+    schedule: "17 * * * *"
   server-notifications:
     enabled: true
     containers:
@@ -104,7 +105,7 @@ jobs:
         args:
           - sh
           - /ntppool/bin/bad_server_notifications
-    schedule: "*/15 * * * *"
+    schedule: "*/10 * * * *"
   server-removals:
     enabled: true
     containers:

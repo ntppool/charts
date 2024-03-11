@@ -5,7 +5,6 @@
 {{ $config := .Values.config -}}
 
 {{ $fullName := include "ntppool.fullname" . -}}
-{{ $dataAPI  := index $values "data-api" -}}
 
 {{ range $ingress_type := .Values.ingress.types -}}
 ---
@@ -24,6 +23,7 @@ apiVersion: networking.k8s.io/v1
 {{   $tls = eq $config.web_tls "yes" }}
 {{ end }}
 
+{{ $dataAPI  := index $values "data-api" -}}
 {{ $dataAPIService := printf "%s-%s" $fullName "-data-api" -}}
 {{ if ne $dataAPI.serviceName "" -}}
 {{   $dataAPIService = $dataAPI.serviceName -}}
@@ -34,15 +34,14 @@ metadata:
   name: {{ $fullName }}-{{ $ingress_type }}
   labels:
     {{ include "ntppool.labels" $g | nindent 4 }}
+    type: {{ $ingress_type }}
   annotations:
-  {{- if $values.ingress.class }}
-    # this might be needed on older kubernetes installs, but
-    # we can't set both this and the ingressClassName anymore it seems.
-    # kubernetes.io/ingress.class: {{ $values.ingress.class }}
-  {{- end }}
-  {{- if $tls }}
+    {{- if $tls }}
     kubernetes.io/tls-acme: "true"
-  {{ end }}
+    {{ end }}
+    {{ if eq $ingress_type "data-api" }}
+    haproxy-ingress.github.io/rewrite-target: /api
+    {{ end }}
 
   {{ with $values.ingress.annotations }}
     {{ toYaml . | nindent 4 }}
@@ -64,6 +63,15 @@ spec:
     - host: {{ $h | quote }}
       http:
         paths:
+      {{ if eq $ingress_type "data-api" }}
+          - path: /api/data
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $dataAPIService }}
+                port:
+                  number: {{ $svcPort }}
+      {{ else }}
           - path: /
             pathType: Prefix
             backend:
@@ -71,14 +79,15 @@ spec:
                 name: {{ $fullName }}
                 port:
                   number: {{ $svcPort }}
-      {{ if and (eq $idx 0) (eq $ingress_type "web") }}
+          {{ if eq $ingress_type "web" }}
           - path: /graph/
             pathType: Prefix
             backend:
               service:
-                name: {{ $fullName }}-data-api
+                name: {{ $dataAPIService }}
                 port:
                   number: 80
+          {{ end }}
       {{ end }}
   {{ end }}
 {{ end }}

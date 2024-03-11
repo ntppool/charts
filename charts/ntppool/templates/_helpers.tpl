@@ -94,16 +94,6 @@ env:
     secretKeyRef:
       key: db_auth_file
       name: {{ include "ntppool.fullname" . }}-secrets
-- name: account_id_key
-  valueFrom:
-    secretKeyRef:
-      key: account_id_key
-      name: {{ include "ntppool.fullname" . }}-secrets
-- name: vendor_zone_id_key
-  valueFrom:
-    secretKeyRef:
-      key: vendor_zone_id_key
-      name: {{ include "ntppool.fullname" . }}-secrets
 - name: geoip_service
   value: {{ .Release.Name }}-geoip
 - name: locationcode_service
@@ -119,11 +109,15 @@ volumeMounts:
 {{ if (ne .Values.config.deployment_mode "devel") -}}
 - mountPath: /ntppool/data
   name: data
-{{- end -}}
+{{ end -}}
 {{ if and .Values.develPath (eq .Values.config.deployment_mode "devel") -}}
 - mountPath: '/ntppool'
   name: 'code'
-{{- end -}}
+{{ end -}}
+{{ if .Values.config.proxyip_configmap }}
+- mountPath: '/etc/fastly-ips'
+  name: 'fastly-ips'
+{{ end }}
 {{- end -}}
 
 {{- define "ntppool.appVolumes" -}}
@@ -135,4 +129,10 @@ volumeMounts:
   hostPath:
     path: {{ $values.develPath }}
 {{- end}}
+{{if .Values.config.proxyip_configmap }}
+- name: fastly-ips
+  configMap:
+    name: {{ .Values.config.proxyip_configmap }}
+{{- end }}
+
 {{- end -}}
