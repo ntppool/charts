@@ -50,7 +50,7 @@ for my $chart (@publish) {
 }
 
 if ($ENV{FASTLY_API_TOKEN} && $ENV{FASTLY_SERVICE_ID}) {
-    run("fastly -i purge --soft --url http://charts.ntppool.org/charts/index.yaml");
+    run("fastly -i purge --soft --url https://charts.ntppool.org/charts/index.yaml");
 }
 
 sub run {
