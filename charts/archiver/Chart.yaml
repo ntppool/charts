@@ -16,6 +16,6 @@ dependencies:
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: app: Update dependencies, Go 1.23.0
+      description: "app: Update dependencies, Go 1.23.0"
     - kind: changed
-      description: app: Allow 1 day retention
+      description: "app: Allow 1 day retention"
