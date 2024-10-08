@@ -9,7 +9,7 @@ type: Opaque
 data:
 {{- range $key, $value := .Values.config }}
   {{- if $value }}
-  {{ $key }}: {{ $value | b64enc | quote }}
+  {{ $key }}: {{ print $value | b64enc | quote }}
   {{- end -}}
 {{- end }}
 {{- end }}

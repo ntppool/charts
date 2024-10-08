@@ -7,7 +7,7 @@ type: application
 # This is the chart version. This version number should be
 # incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 2.1.1
+version: 2.1.2
 
 # This is the version number of the application being deployed.
 appVersion: v0.5.2
@@ -15,4 +15,4 @@ appVersion: v0.5.2
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: "Documentation tweaks"
+      description: "Support numeric configuration settings via --set parameters"
