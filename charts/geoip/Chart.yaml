@@ -17,12 +17,14 @@ type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
-version: 0.3.1
+version: 0.4.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: 2023.06.0
+appVersion: 2024.12.0
 
 annotations:
   artifacthub.io/changes: |
-    - Update app version (dependencies and latest Go version)
+    - Update app version
+    - Add support for OpenTelemetry tracing
+    - Latest Go version & dependencies
