@@ -4,7 +4,7 @@ dependencies:
   version: 1.6.9
 - name: geoip
   repository: https://charts.ntppool.org/
-  version: 0.3.1
+  version: 0.4.0
 - name: data-api
   repository: https://charts.ntppool.org/
   version: 0.9.1
@@ -20,5 +20,5 @@ dependencies:
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:95a96fc5c740746c6039ab87d84372feeea3a872f01799ec3c0bd26423d9f130
-generated: "2023-12-31T20:54:01.278475-08:00"
+digest: sha256:1a5e83f80ce7bcb248e7eaf3539cefc52d70636bfcd3ad514018ad3163533410
+generated: "2024-12-23T15:04:14.550425-08:00"

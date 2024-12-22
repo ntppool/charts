@@ -5,17 +5,15 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.6.0
+version: 0.6.1
 
 # application version (+default image tag)
-appVersion: prod-2024.03.0
+appVersion: prod-2024.10.0
 
 annotations:
   artifacthub.io/changes: |
     - Upgrade application
-    - Integrate data-api
-    - Fastly IP support
-    - Revise cron schedules
+    - Update geoip api
 
 dependencies:
 - name: mysql
