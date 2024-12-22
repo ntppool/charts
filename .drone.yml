@@ -31,7 +31,7 @@ steps:
 #  - ct lint --debug
 
 - name: build
-  image: alpine/helm:3.13.2
+  image: alpine/helm:3.16.4
   environment:
     HELM_PASSWORD:
       from_secret: helm_password
@@ -62,6 +62,6 @@ steps:
       - main
 ---
 kind: signature
-hmac: 2182b89e47e6a60e463da7256068ce32d35b1fd07c771370a17cc0ee24538022
+hmac: 050f2dee1714240aa46e3a0a091e3d9e906795a84b987cf647b7e43bf89c5491
 
 ...
