@@ -11,8 +11,8 @@ image:
   # -- image tag, defaults to appVersion
   #tag:
   # -- image pull policy
-  #pullPolicy: IfNotPresent
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
+  #pullPolicy: Always
 
 # -- environment variables. See more environment variables in the [monitor-api documentation](https://go.ntppool.org/monitor/cmd/monitor-api).
 # @default -- See below
