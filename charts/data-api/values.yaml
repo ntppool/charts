@@ -12,9 +12,7 @@ controllers:
         - server
         image:
           repository: harbor.ntppool.org/ntppool/data-api
-          tag: 0.2.1
-          # with common 2.4.x
-          # tag: "{{.Chart.AppVersion}}"
+          tag: "{{.Chart.AppVersion}}"
           pullPolicy: IfNotPresent
 
         resources:
@@ -32,7 +30,7 @@ controllers:
               failureThreshold: 2
               httpGet:
                 path: /__health
-                port: 9020
+                port: 9019
                 scheme: HTTP
               initialDelaySeconds: 4
               periodSeconds: 3
@@ -44,7 +42,7 @@ controllers:
               failureThreshold: 2
               httpGet:
                 path: /__health
-                port: 9020
+                port: 9019
                 scheme: HTTP
               initialDelaySeconds: 4
               periodSeconds: 3
@@ -80,7 +78,7 @@ service:
       http:
         port: 80
         targetPort: 8030
-        protocol: TCP
+        protocol: HTTP
 
       health:
         enabled: true

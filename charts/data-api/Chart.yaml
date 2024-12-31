@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 0.2.1
+appVersion: 0.4.7
 description: NTP Pool Data API Service
 name: data-api
-version: 0.9.1
+version: 0.9.8
 kubeVersion: ">=1.16.0-0"
 keywords:
   - ntppool
@@ -11,9 +11,11 @@ maintainers:
     email: ask@develooper.com
 dependencies:
   - name: common
-    version: 2.3.x
+    version: 2.4.x
     repository: https://bjw-s.github.io/helm-charts/
 annotations:
   artifacthub.io/changes: |
     - kind: changed
-      description: update common
+      description: update app
+    - kind: changed
+      description: helm chart fixes to port numbers
