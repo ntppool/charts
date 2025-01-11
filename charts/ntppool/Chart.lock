@@ -7,18 +7,18 @@ dependencies:
   version: 0.4.0
 - name: data-api
   repository: https://charts.ntppool.org/
-  version: 0.9.1
+  version: 0.9.8
 - name: screensnap
   repository: https://charts.ntppool.org/
-  version: 1.1.0
+  version: 1.1.1
 - name: smtp
   repository: https://charts.ntppool.org/
   version: 2.1.1
 - name: locationcode
   repository: https://charts.ntppool.org/
-  version: 1.0.7
+  version: 1.0.8
 - name: common
   repository: https://library-charts.k8s-at-home.com
   version: 4.3.0
-digest: sha256:1a5e83f80ce7bcb248e7eaf3539cefc52d70636bfcd3ad514018ad3163533410
-generated: "2024-12-23T15:04:14.550425-08:00"
+digest: sha256:f99fa96c17d9c168679e48f7d00b948f0e093ce0346dd677eb2f9fc4831ff40b
+generated: "2025-01-10T04:05:11.026834-08:00"

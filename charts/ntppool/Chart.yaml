@@ -5,14 +5,14 @@ home: https://github.com/abh/ntppool/
 type: application
 
 # This is the chart version.
-version: 0.6.2
+version: 0.6.3
 
 # application version (+default image tag)
 appVersion: prod-2024.12.0
 
 annotations:
   artifacthub.io/changes: |
-    - Upgrade application
+    - Upgrade dependencies
 
 dependencies:
 - name: mysql
