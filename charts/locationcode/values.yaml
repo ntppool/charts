@@ -19,6 +19,9 @@ env:
   # -- Set the container timezone
   TZ: UTC
 
+podAnnotations:
+  instrumentation.opentelemetry.io/inject-sdk: "true"
+
 # -- Configures service settings for the chart.
 # @default -- See values.yaml
 service:
