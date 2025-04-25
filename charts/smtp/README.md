@@ -1,6 +1,6 @@
 # smtp
 
-This chart installs an [smtp daemon](https://github.com/ix-ai/smtp) in
+This chart installs an [smtp daemon](https://gitlab.com/egos-tech/smtp) in
 kubernetes to work as a mail relay.
 
 The recommended approach is to configure it with authentication to a
@@ -12,9 +12,9 @@ namespace) send mail to this relay.
 Add a `config:` key to your values.yaml override (or helm `--set` parameters) with the necessary values (without the # prefix for the
 values you set):
 
-```
+```yml
 config:
-  # See documentation at https://github.com/ix-ai/smtp#readme
+  # See documentation at https://gitlab.com/egos-tech/smtp#smtp
   #SMARTHOST_ADDRESS: mail.example.com
   #SMARTHOST_PORT: "587"
   #SMARTHOST_USER: myuser
@@ -32,4 +32,4 @@ SMARTHOST_ALIASES setting.
 
 You can also use Gmail or Amazon SES with just a couple of
 configuration values as described in the
-[ix-ai/smtp](https://github.com/ix-ai/smtp#smtp) documentation.
+[egos-tech/smtp](https://gitlab.com/egos-tech/smtp#smtp) documentation.
